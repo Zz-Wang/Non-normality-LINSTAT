@@ -1,0 +1,238 @@
+\documentclass{beamer}
+\usetheme{Boadilla}
+
+
+%\usepackage[utf8]{inputenc}
+\usepackage{amsthm, amsmath, amssymb}
+\usepackage{pstricks}
+%\usepackage[colorlinks = true, linkcolor = black, citecolor = black, final]{hyperref}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+
+\usetikzlibrary{shapes,backgrounds}
+
+\title{A simple test for multivariate non-normality}
+\subtitle{LINSTAT 2018}
+\author{Zhizheng Wang}
+\institute{Linnaeus University}
+\date{August 23, 2018}
+
+%\titlegraphic{\includegraphics[width=\textwidth,height=.5\textheight]{someimage}}
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+\section{Review}
+%\subsection{Operator norm}
+\begin{frame}
+\frametitle{From the 1st presentation}
+\textbf{Semi-circular Law} 
+Famous result on spectral distribution of random matrices \cite{wigner1958distribution}:\\
+Let $M_n$ be a Hermitian matrix with all upper triangular elements $m_{i,j}$ being random variable with mean $0$ and variance $1$. Matrix $M_n$ has $n$ real eigenvalues $\lambda_1, \lambda_2, \cdots, \lambda_n$. As $n \rightarrow \infty$, the density function of the distribution of $n$ eigenvalues follows,
+\[
+\rho_{sc}(x) = \frac{1}{2\pi}(4-x^2)^{\frac{1}{2}}_{+}.
+\]
+\textbf{Wigner Semi-Circular Law}\\
+Let $M_n$ be a Wigner Hermitian matrix. Then for any real number
+$x$,
+\[
+\lim_{n \rightarrow \infty} \frac{1}{n} |\{ 1 \leq i \leq n: \lambda_i(W_n)\leq x \}| = \int_{-2}^x \rho_{sc}(y)\text{d}y,
+\]
+in the sense of probability. 
+\end{frame}
+
+%\subsection{Random matrices}
+\begin{frame}
+\frametitle{From the 1st presentation cont.d}
+\textbf{Two important ensembles}
+The most famous and important classes of ensembles include Gaussian Orthogonal Ensemble (GoE) and Gaussian Unitary Ensemble (GuE).\\ 
+\vspace{10mm} %5mm vertical space
+\textbf{Upper bound}
+Using the method of moment to find a good \textit{Upper bound} of probability,
+\[
+\mathbb{P}(|||M_n|||\geq \lambda) \leq \cdots
+\]
+for various thresholds $\lambda$.
+\end{frame}
+
+%\section{Mar\v{c}enko-Pastur distribution}
+\section{From Classic probability to free probability}
+\subsection{Classic probability}
+\begin{frame}
+\frametitle{Kolmogorov's formulation} 
+A probability space $(\Omega, \mathcal{F}, P)$:\\
+\begin{itemize}
+\item $\Omega$ sample space, a set of all possible outcomes (possibly abstract);
+\item $\mathcal{F}$ $\sigma$-algebra of sets, the measurable subsets of $\Omega$;
+\item $P$ a probability measure.
+\end{itemize}
+where $P$ satisfies the following Kolmogorov axioms:
+\begin{itemize}
+\item For any $A \in \mathcal{F}$, there exists a number $P(A) \geq 0$, the probability of $A$;
+\item $P(\Omega) = 1$;
+\item countable additivity: let $\{A_n, n\geq 1\}$ be disjoint, then $P(\cup_{n=1}^{\infty} A_n) = \sum_{n=1}^{\infty} P(A_n)$.
+\end{itemize}
+\end{frame}
+
+\subsection{Free probability}
+\begin{frame}
+\frametitle{Voiculescu: I. Basic idea}
+We can look at the semi-circular law as kind of an "extension" of "central limit theorem" in the classical probability theory, as both $n \rightarrow \infty   $. Then, we can interpret normalized moments of random matrices (or normalized trace) as an "extension" of "expectation" in the classical probability theory. \\
+In fact, free probability actually belongs to more general theory of \textit{non-commutative probability}, which does not have a underlying sample space, but built upon a (possibly) \textit{non-commutative} algebra of random variables. 
+\end{frame}
+
+\begin{frame}
+\frametitle{Voiculescu: II. Definition}
+\begin{block}{Definition 1: non-commutative probability space}
+A \textit{non-commutative probability space} is a pair $(\mathcal{A}, \tau)$ which consists of a unital *-algebra $\mathcal{A}$ of random variables over the field of complex numbers $\mathcal{C}$, together with a *-linear trace function $\tau: \mathcal{A} \rightarrow \mathcal{C}$. 
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Voiculescu: II. Definition breakdown}
+\begin{block}{*-operation}
+*-operation: $L^{\infty-} \rightarrow L^{\infty-} $ is anti-automorphism on $L^{\infty-}$, which satisfies
+\begin{itemize}
+\item $(X+Y)^* = X^*+Y^*$ (preserves addition);
+\item $(XY)^*=Y^*X^*$ (reverses multiplication);
+\item $(cX)^* = \bar{c}X^*$ for $c\in \mathbb{C}$ (anti-homogeneous).
+\end{itemize}
+In fact, it is its own inverse ($(X^*)^* = X$), and is thus an \textit{involution}.\\
+Note: $L^{\infty-}\coloneqq \cap_{k=1}^{\infty} L^k(\Omega)$ of random variables with all moments finite.\\
+Furthermore, an algebra is unital or unitary if it has a unit or identity element $I$ with $IX = X = XI$ for all $X$ in the algebra.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Voiculescu: II. Definition breakdown 2}
+\begin{block}{$\tau$}
+Trace function $\tau$ satisfies,
+\begin{itemize}
+\item $\tau: \mathcal{A} \rightarrow \mathbb{C}$ is linear;
+\item $\tau(1_{\mathcal{A}})=1$ (abstraction of $P(\Omega)=1$).
+\end{itemize}
+\end{block}
+Moreover, non-negativity axiom is needed:
+\begin{block}{$\tau$ Axiom}
+For any $X\in \mathcal{A}$, $\tau(X^*X) \geq 0$ (abstraction of $P(A)\geq 0$).
+\end{block}
+\end{frame}
+
+\subsection{Random matrix theory}
+\begin{frame}
+\frametitle{Random matrix and free probability}
+\begin{block}{Random matrix in another form}
+\[
+X \in L^{\infty-} \otimes M_n(\mathcal{C})
+\]
+\end{block}
+\begin{block}{*-operation}
+* denotes  complex conjugate or adjoint $X^* = \bar{X}$ of a complex-valued random variable. 
+\end{block}
+\begin{block}{$\tau$: Voiculescu's asymptotic freeness}
+\[
+\tau(X) \coloneqq \mathbb{E}\frac{1}{n}\text{tr}X.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Empirical spectral distribution}
+One of the "free probability" measure we are interested in is expected Empirical spectral distribution (eESD). For any random matrix X previously, we can form the eESD as,
+\[
+\mu_X = \mathbb{E}\frac{1}{n} \sum_{i=1}^n \delta_{\lambda_i(X)}.
+\],
+where $\delta_{X}$ is Dirac mass, as 
+\[ \delta_{X} =
+  \begin{cases}
+    1  & \quad x\in \mathcal{A}\\
+    0  & \quad x\not\in \mathcal{A}
+  \end{cases}
+\]
+\end{frame}
+
+\section{Free independence}
+\begin{frame}
+\frametitle{Definition}
+\begin{block}{Free independence}
+A collection $X_1, X_2, \cdots, X_k$ of random variables in a non-commutative probability space $(\mathcal{A}, \tau)$ is \textit{freely independent} (or \textit{free} for short) if one has,
+\[
+\tau((P_1(X_{i_1})-\tau(P_1(X_{i_1})))\cdots(P_m(X_{i_m})-\tau(P_m(X_{i_m}))))=0
+\]
+whenever $P_1,\cdots, P_m$ are polynomials and $i_1, \cdots, i_m\in \{1,\cdots, k\}$ are indices with no two adjacent $i_j$ equal. (\textbf{Analogue} of "classical" independence)\\
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Warning: Difference}
+\begin{block}{Compared against classical independence}
+However, there is difference! Some calculation as follows. In free independence,
+\[
+\tau(XYXY)=\tau(X)^2\tau(Y^2)+\tau(X^2)\tau(Y)^2-\tau(X)^2\tau(Y)^2,
+\]
+which differs from the classical independence of 
+\[
+\tau(XYXY)=\tau(X^2)\tau(Y^2).
+\]
+\end{block}
+Actually, freeness and commutativity CANNOT occur simultaneously.
+\end{frame}
+
+\subsection{R-transform and free convolution}
+\begin{frame}
+\frametitle{R-transform}
+We begin with,
+\begin{block}{Stieljes transform}
+\[
+s_X(z) \coloneqq \tau((X-z)^{-1}) = \int_{\mathbb{R}} \frac{1}{x-z}\text{d}\mu_X(x).
+\]
+\end{block}
+Then instead of viewing $s=s_X(z)$ as a function of z, we rather view $z=z_X(s)$ as a function of s. 
+\begin{block}{R-tranform}
+\[
+R_X(s) = z_X(-s)-s^{-1}
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Free convolution}
+\begin{block}{summing two independent variables}
+We arrive at the distribution of summing two freely independent non-commutative random variables $X$ and $Y$,
+\[
+R_{X+Y} = R_{X}+R_{Y}.
+\]
+\end{block}
+\begin{block}{Compared against classical independence}
+\[
+\text{log}F_{X+Y} = \text{log}F_X +\text{log}F_Y 
+\]
+\end{block}
+\end{frame}
+\medskip
+
+\section{Reference}
+\begin{frame}
+Some important references on free probability,
+\cite{tao2012topics}, \cite{shlyakhtenko2017random}, \cite{anderson2010introduction},  \cite{nica2006lectures},  \cite{akemann2011oxford}(chapter 22), \cite{mitchener2005non}, \cite{voiculescu1992free}, 
+\cite{mingo2010free}, \cite{pielaszkiewicz2015closed}.\\
+
+\textbf{Thank you!}
+
+\end{frame}
+\begin{frame}[allowframebreaks]
+\bibliographystyle{unsrt}
+\bibliography{ref.bib}
+\end{frame}
+\end{document}
